@@ -5,29 +5,32 @@
 %define		pkgname	scientific
 Summary:	Numbers represented using scientific notation
 Name:		ghc-%{pkgname}
-Version:	0.3.4.6
+Version:	0.3.6.2
 Release:	1
 License:	BSD
 Group:		Development/Languages
 Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{version}.tar.gz
-# Source0-md5:	beaffa29a79f0717729c9dc48820c149
+# Source0-md5:	f4f40eec14dd8c9308d8dd478212e4b7
 URL:		http://hackage.haskell.org/package/scientific
 BuildRequires:	ghc >= 6.12.3
 BuildRequires:	ghc-base >= 3
-BuildRequires:	ghc-base <= 5
 BuildRequires:	ghc-bytestring >= 0.9
+BuildRequires:	ghc-hashable >= 1.1.2
+BuildRequires:	ghc-integer-logarithms >= 1
 %if %{with prof}
 BuildRequires:	ghc-prof >= 6.12.3
 BuildRequires:	ghc-base-prof >= 3
-BuildRequires:	ghc-base-prof <= 5
 BuildRequires:	ghc-bytestring-prof >= 0.9
+BuildRequires:	ghc-hashable-prof >= 1.1.2
+BuildRequires:	ghc-integer-logarithms-prof >= 1
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 Requires(post,postun):	/usr/bin/ghc-pkg
 %requires_eq	ghc
 Requires:	ghc-base >= 3
-Requires:	ghc-base <= 5
 Requires:	ghc-bytestring >= 0.9
+Requires:	ghc-hashable >= 1.1.2
+Requires:	ghc-integer-logarithms >= 1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # debuginfo is not useful for ghc
@@ -46,8 +49,9 @@ Summary(pl.UTF-8):	Biblioteka profilująca %{pkgname} dla GHC
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	ghc-base-prof >= 3
-Requires:	ghc-base-prof <= 5
 Requires:	ghc-bytestring-prof >= 0.9
+Requires:	ghc-hashable-prof >= 1.1.2
+Requires:	ghc-integer-logarithms-prof >= 1
 
 %description prof
 Profiling %{pkgname} library for GHC. Should be installed when GHC's
@@ -110,8 +114,9 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/HSscientific-%{version}.o
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*.so
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*.a
+%exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*_p.a
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/ByteString
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/ByteString/Builder
@@ -120,20 +125,22 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data/Text/Lazy/Builder
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/GHC
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/GHC/Integer
-%dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/GHC/Integer/Logarithms
-%dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Math
-%dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Math/NumberTheory
 #{_libdir}/%{ghcdir}/%{pkgname}-%{version}/{*,*/*,*/*/*,*/*/*/*}.hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.dyn_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*.dyn_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*.dyn_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*/*.dyn_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*/*/*.hi
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*/*/*.dyn_hi
 
 %if %{with prof}
 %files prof
 %defattr(644,root,root,755)
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}_p.a
+%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*_p.a
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*.p_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*.p_hi
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/*/*/*.p_hi
