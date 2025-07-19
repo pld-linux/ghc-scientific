@@ -4,6 +4,7 @@
 #
 %define		pkgname	scientific
 Summary:	Numbers represented using scientific notation
+Summary(pl.UTF-8):	Liczby reprezentowane przy użyciu notacji naukowej
 Name:		ghc-%{pkgname}
 Version:	0.3.6.2
 Release:	2
@@ -12,25 +13,40 @@ Group:		Development/Languages
 Source0:	http://hackage.haskell.org/package/%{pkgname}-%{version}/%{pkgname}-%{version}.tar.gz
 # Source0-md5:	f4f40eec14dd8c9308d8dd478212e4b7
 URL:		http://hackage.haskell.org/package/scientific
-BuildRequires:	ghc >= 6.12.3
-BuildRequires:	ghc-base >= 3
-BuildRequires:	ghc-bytestring >= 0.9
+BuildRequires:	ghc >= 7.0.1
+BuildRequires:	ghc-base >= 4.3
+BuildRequires:	ghc-binary >= 0.4.1
+BuildRequires:	ghc-bytestring >= 0.10.4
+BuildRequires:	ghc-containers >= 0.1
+BuildRequires:	ghc-deepseq >= 1.3
 BuildRequires:	ghc-hashable >= 1.1.2
 BuildRequires:	ghc-integer-logarithms >= 1
+BuildRequires:	ghc-primitive >= 0.1
+BuildRequires:	ghc-text >= 0.8
 %if %{with prof}
 BuildRequires:	ghc-prof >= 6.12.3
-BuildRequires:	ghc-base-prof >= 3
-BuildRequires:	ghc-bytestring-prof >= 0.9
+BuildRequires:	ghc-base-prof >= 4.3
+BuildRequires:	ghc-binary-prof >= 0.4.1
+BuildRequires:	ghc-bytestring-prof >= 0.10.4
+BuildRequires:	ghc-containers-prof >= 0.1
+BuildRequires:	ghc-deepseq-prof >= 1.3
 BuildRequires:	ghc-hashable-prof >= 1.1.2
 BuildRequires:	ghc-integer-logarithms-prof >= 1
+BuildRequires:	ghc-primitive-prof >= 0.1
+BuildRequires:	ghc-text-prof >= 0.8
 %endif
 BuildRequires:	rpmbuild(macros) >= 1.608
 Requires(post,postun):	/usr/bin/ghc-pkg
 %requires_eq	ghc
-Requires:	ghc-base >= 3
-Requires:	ghc-bytestring >= 0.9
+Requires:	ghc-base >= 4.3
+Requires:	ghc-binary >= 0.4.1
+Requires:	ghc-bytestring >= 0.10.4
+Requires:	ghc-containers >= 0.1
+Requires:	ghc-deepseq >= 1.3
 Requires:	ghc-hashable >= 1.1.2
 Requires:	ghc-integer-logarithms >= 1
+Requires:	ghc-primitive >= 0.1
+Requires:	ghc-text >= 0.8
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # debuginfo is not useful for ghc
@@ -43,15 +59,24 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Arbitrary-precision floating-point numbers represented using
 scientific notation regular expressions.
 
+%description -l pl.UTF-8
+Liczby zmiennoprzecinkowe o dowolnej precyzji, reprezentowane przy
+użyciu wyrażeń regularnych notacji naukowej.
+
 %package prof
 Summary:	Profiling %{pkgname} library for GHC
 Summary(pl.UTF-8):	Biblioteka profilująca %{pkgname} dla GHC
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	ghc-base-prof >= 3
-Requires:	ghc-bytestring-prof >= 0.9
+Requires:	ghc-base-prof >= 4.3
+Requires:	ghc-binary-prof >= 0.4.1
+Requires:	ghc-bytestring-prof >= 0.10.4
+Requires:	ghc-containers-prof >= 0.1
+Requires:	ghc-deepseq-prof >= 1.3
 Requires:	ghc-hashable-prof >= 1.1.2
 Requires:	ghc-integer-logarithms-prof >= 1
+Requires:	ghc-primitive-prof >= 0.1
+Requires:	ghc-text-prof >= 0.8
 
 %description prof
 Profiling %{pkgname} library for GHC. Should be installed when GHC's
@@ -111,10 +136,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE
+%doc LICENSE changelog
 %{_libdir}/%{ghcdir}/package.conf.d/%{pkgname}.conf
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}
-%{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*.so
+%attr(755,root,root) %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*.so
 %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*.a
 %exclude %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/libHSscientific-%{version}-*_p.a
 %dir %{_libdir}/%{ghcdir}/%{pkgname}-%{version}/Data
